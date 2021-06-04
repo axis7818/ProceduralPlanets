@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlanetFace
 {
+	private ShapeGenerator shapeGenerator;
 	private Mesh mesh;
 	private int resolution;
 
@@ -12,8 +13,9 @@ public class PlanetFace
 	private Vector3 latDir;
 	private Vector3 lonDir;
 
-	public PlanetFace(Mesh mesh, int resolution, Vector3 normalDirection)
+	public PlanetFace(ShapeGenerator shapeGenerator, Mesh mesh, int resolution, Vector3 normalDirection)
 	{
+		this.shapeGenerator = shapeGenerator;
 		this.mesh = mesh;
 		this.resolution = resolution;
 
@@ -42,7 +44,7 @@ public class PlanetFace
 					(percent.y - 0.5f) * 2 * lonDir;        // adjust in y
 				Vector3 pointOnUnitSphere = pointOnUnitCube.normalized;
 
-				vertices[vertexIndex] = pointOnUnitSphere;
+				vertices[vertexIndex] = shapeGenerator.CalculatePointOnPlanet(pointOnUnitSphere);
 
 				if (x != resolution - 1 && y != resolution - 1)
 				{
