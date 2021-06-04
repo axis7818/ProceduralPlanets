@@ -53,5 +53,6 @@
         "Temp/": true
     },
     "csharp.referencesCodeLens.enabled": false,
-    "editor.tabSize": 3
+    "editor.tabSize": 3,
+    "files.eol": "\n"
 }
