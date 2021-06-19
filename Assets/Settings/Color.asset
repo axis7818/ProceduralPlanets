@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f92dd43587c10d14a984ee09b2b628cd, type: 3}
   m_Name: Color
   m_EditorClassIdentifier: 
-  color: {r: 0.02352941, g: 0.4254881, b: 1, a: 0}
-  foldout: 0
+  color: {r: 1, g: 0.68052006, b: 0.4198113, a: 0}
+  foldout: 1
