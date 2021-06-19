@@ -5,7 +5,8 @@ using UnityEngine;
 [CreateAssetMenu()]
 public class ColorSettings : ScriptableObject
 {
-	public Color color;
+	public Gradient gradient;
+	public Material planetMaterial;
 
 	[HideInInspector]
 	public bool foldout = true;
