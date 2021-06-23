@@ -11,9 +11,9 @@ public class Planet : MonoBehaviour
 	public FaceRenderMask faceRenderMask;
 
 	public ShapeSettings shapeSettings;
-	public ColorSettings colorSettings;
-
 	private ShapeGenerator shapeGenerator = new ShapeGenerator();
+
+	public ColorSettings colorSettings;
 	private ColorGenerator colorGenerator = new ColorGenerator();
 
 	[SerializeField, HideInInspector]
