@@ -56,4 +56,4 @@ MonoBehaviour:
         center: {x: 1.89, y: -1.08, z: 1.44}
         minValue: 0.22
         weightMultiplier: 0.7
-  foldout: 0
+  foldout: 1

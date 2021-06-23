@@ -34,16 +34,13 @@ public class PlanetFace
 		int[] triangles = new int[3 * totalTriangles];
 		int triangleIndex = 0;
 
+		Vector2[] uv = mesh.uv;
+
 		for (int y = 0; y < resolution; y++)
 		{
 			for (int x = 0; x < resolution; x++)
 			{
-				Vector2 percent = new Vector2(x, y) / (resolution - 1);
-				Vector3 pointOnUnitCube = this.normDir +   // move from center
-					(percent.x - 0.5f) * 2 * latDir +       // adjust in x
-					(percent.y - 0.5f) * 2 * lonDir;        // adjust in y
-				Vector3 pointOnUnitSphere = pointOnUnitCube.normalized;
-
+				Vector3 pointOnUnitSphere = PointOnUnitSphere(x, y);
 				vertices[vertexIndex] = shapeGenerator.CalculatePointOnPlanet(pointOnUnitSphere);
 
 				if (x != resolution - 1 && y != resolution - 1)
@@ -67,5 +64,31 @@ public class PlanetFace
 		mesh.vertices = vertices;
 		mesh.triangles = triangles;
 		mesh.RecalculateNormals();
+		mesh.uv = uv;
+	}
+
+	public void UpdateUVs(ColorGenerator colorGenerator)
+	{
+		Vector2[] uv = new Vector2[resolution * resolution];
+		for (int y = 0; y < resolution; y++)
+		{
+			for (int x = 0; x < resolution; x++)
+			{
+				int i = x + y * resolution;
+				Vector3 pointOnUnitSphere = PointOnUnitSphere(x, y);
+				uv[i] = new Vector2(colorGenerator.BiomePercentFromPoint(pointOnUnitSphere), 0);
+			}
+		}
+		mesh.uv = uv;
+	}
+
+	private Vector3 PointOnUnitSphere(int x, int y)
+	{
+		Vector2 percent = new Vector2(x, y) / (resolution - 1);
+		Vector3 pointOnUnitCube = this.normDir +   // move from center
+			(percent.x - 0.5f) * 2 * latDir +       // adjust in x
+			(percent.y - 0.5f) * 2 * lonDir;        // adjust in y
+		Vector3 pointOnUnitSphere = pointOnUnitCube.normalized;
+		return pointOnUnitSphere;
 	}
 }
