@@ -15,7 +15,7 @@ public class ColorGenerator
 		var biomes = colorSettings.biomeColorSettings.biomes;
 		if (texture == null || texture.height != biomes.Length)
 		{
-			texture = new Texture2D(textureResolution, biomes.Length);
+			texture = new Texture2D(textureResolution, biomes.Length, TextureFormat.RGBA32, false);
 		}
 		biomeNoiseFilter = NoiseFilterFactory.CreateNoiseFilter(colorSettings.biomeColorSettings.noiseSettings);
 	}
@@ -31,7 +31,8 @@ public class ColorGenerator
 		var biomes = biomeColorSettings.biomes;
 
 		float heightPercent = (pointOnUnitSphere.y + 1) / 2f;
-		heightPercent += (biomeNoiseFilter.Evaluate(pointOnUnitSphere) - biomeColorSettings.noiseOffset) * biomeColorSettings.noiseStrength;
+		heightPercent += (biomeNoiseFilter.Evaluate(pointOnUnitSphere) - biomeColorSettings.noiseOffset) *
+			biomeColorSettings.noiseStrength;
 		float biomeIndex = 0;
 		float blendRange = biomeColorSettings.blendAmount / 2f + 0.001f;
 		for (int i = 0; i < biomes.Length; i += 1)
@@ -60,6 +61,7 @@ public class ColorGenerator
 				colorIndex += 1;
 			}
 		}
+		Debug.Log("Updating texture colors");
 		texture.SetPixels(colors);
 		texture.Apply();
 

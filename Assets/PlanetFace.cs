@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlanetFace
 {
 	private ShapeGenerator shapeGenerator;
+	private ColorGenerator colorGenerator;
 	private Mesh mesh;
 	private int resolution;
 
@@ -13,9 +14,10 @@ public class PlanetFace
 	private Vector3 latDir;
 	private Vector3 lonDir;
 
-	public PlanetFace(ShapeGenerator shapeGenerator, Mesh mesh, int resolution, Vector3 normalDirection)
+	public PlanetFace(ShapeGenerator shapeGenerator, ColorGenerator colorGenerator, Mesh mesh, int resolution, Vector3 normalDirection)
 	{
 		this.shapeGenerator = shapeGenerator;
+		this.colorGenerator = colorGenerator;
 		this.mesh = mesh;
 		this.resolution = resolution;
 
@@ -67,7 +69,7 @@ public class PlanetFace
 		mesh.uv = uv;
 	}
 
-	public void UpdateUVs(ColorGenerator colorGenerator)
+	public void UpdateUVs()
 	{
 		Vector2[] uv = new Vector2[resolution * resolution];
 		for (int y = 0; y < resolution; y++)

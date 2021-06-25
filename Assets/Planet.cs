@@ -67,7 +67,7 @@ public class Planet : MonoBehaviour
 			}
 			meshFilters[i].GetComponent<MeshRenderer>().sharedMaterial = colorSettings.planetMaterial;
 
-			planetFaces[i] = new PlanetFace(shapeGenerator, meshFilters[i].sharedMesh, this.resolution, normals[i]);
+			planetFaces[i] = new PlanetFace(shapeGenerator, colorGenerator, meshFilters[i].sharedMesh, this.resolution, normals[i]);
 			bool renderFace = faceRenderMask == FaceRenderMask.All || (int)faceRenderMask - 1 == i;
 			meshFilters[i].gameObject.SetActive(renderFace);
 		}
@@ -93,7 +93,7 @@ public class Planet : MonoBehaviour
 		{
 			if (meshFilters[i].gameObject.activeSelf)
 			{
-				planetFaces[i].UpdateUVs(colorGenerator);
+				planetFaces[i].UpdateUVs();
 			}
 		}
 	}
