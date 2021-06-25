@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu()]
 public class ColorSettings : ScriptableObject
 {
+	public Gradient oceanGradient;
 	public Material planetMaterial;
 	public BiomeColorSettings biomeColorSettings;
 

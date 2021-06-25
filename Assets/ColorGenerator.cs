@@ -15,7 +15,7 @@ public class ColorGenerator
 		var biomes = colorSettings.biomeColorSettings.biomes;
 		if (texture == null || texture.height != biomes.Length)
 		{
-			texture = new Texture2D(textureResolution, biomes.Length, TextureFormat.RGBA32, false);
+			texture = new Texture2D(textureResolution * 2, biomes.Length, TextureFormat.RGBA32, false);
 		}
 		biomeNoiseFilter = NoiseFilterFactory.CreateNoiseFilter(colorSettings.biomeColorSettings.noiseSettings);
 	}
@@ -50,18 +50,25 @@ public class ColorGenerator
 	public void UpdateColors()
 	{
 		var biomes = colorSettings.biomeColorSettings.biomes;
-		Color[] colors = new Color[textureResolution * biomes.Length];
+		Color[] colors = new Color[textureResolution * 2 * biomes.Length];
 		int colorIndex = 0;
 		foreach (var biome in biomes)
 		{
-			for (int i = 0; i < textureResolution; i += 1)
+			for (int i = 0; i < textureResolution * 2; i += 1)
 			{
-				Color gradientColor = biome.gradient.Evaluate(i / (textureResolution - 1f));
+				Color gradientColor;
+				if (i < textureResolution)
+				{
+					gradientColor = colorSettings.oceanGradient.Evaluate(i / (textureResolution - 1f));
+				}
+				else
+				{
+					gradientColor = biome.gradient.Evaluate((i - textureResolution) / (textureResolution - 1f));
+				}
 				colors[colorIndex] = gradientColor * (1 - biome.tintPercent) + biome.tint * biome.tintPercent;
 				colorIndex += 1;
 			}
 		}
-		Debug.Log("Updating texture colors");
 		texture.SetPixels(colors);
 		texture.Apply();
 

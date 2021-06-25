@@ -36,14 +36,16 @@ public class PlanetFace
 		int[] triangles = new int[3 * totalTriangles];
 		int triangleIndex = 0;
 
-		Vector2[] uv = mesh.uv;
+		Vector2[] uv = (mesh.uv.Length == vertices.Length) ? mesh.uv : new Vector2[vertices.Length];
 
 		for (int y = 0; y < resolution; y++)
 		{
 			for (int x = 0; x < resolution; x++)
 			{
 				Vector3 pointOnUnitSphere = PointOnUnitSphere(x, y);
-				vertices[vertexIndex] = shapeGenerator.CalculatePointOnPlanet(pointOnUnitSphere);
+				float unscaledElevation = shapeGenerator.CalculateUnscaledElevation(pointOnUnitSphere);
+				vertices[vertexIndex] = pointOnUnitSphere * shapeGenerator.GetScaledElevation(unscaledElevation);
+				uv[vertexIndex].y = unscaledElevation;
 
 				if (x != resolution - 1 && y != resolution - 1)
 				{
@@ -71,14 +73,14 @@ public class PlanetFace
 
 	public void UpdateUVs()
 	{
-		Vector2[] uv = new Vector2[resolution * resolution];
+		Vector2[] uv = mesh.uv;
 		for (int y = 0; y < resolution; y++)
 		{
 			for (int x = 0; x < resolution; x++)
 			{
 				int i = x + y * resolution;
 				Vector3 pointOnUnitSphere = PointOnUnitSphere(x, y);
-				uv[i] = new Vector2(colorGenerator.BiomePercentFromPoint(pointOnUnitSphere), 0);
+				uv[i].x = colorGenerator.BiomePercentFromPoint(pointOnUnitSphere);
 			}
 		}
 		mesh.uv = uv;
